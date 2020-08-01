@@ -53,8 +53,8 @@ ball.penup()
 ball.goto(0, 0)  # 0,0 is in the middle
 
 # Ball Movement
-ball.dx = 0.25
-ball.dy = 0.25
+ball.dx = 0.1
+ball.dy = 0.1
 
 
 # Functions for gameplay
@@ -106,16 +106,26 @@ while True:
     # Border Checking
     if ball.ycor() > 290:
         ball.sety(290)
-        ball.dy *= -0.25  # reverses direction (dy = -0.25)
+        ball.dy *= -1  # reverses direction (dy = -0.25)
 
     if ball.ycor() < -290:
         ball.sety(290)
-        ball.dy *= -0.25
+        ball.dy *= -1
 
     if ball.xcor() > 390:  # 400 left, 400 right, 800 total
         ball.goto(0, 0)
-        ball.dx *= -0.25
+        ball.dx *= -1
 
     if ball.xcor() < -390:  # 400 left, 400 right, 800 total
         ball.goto(0, 0)
-        ball.dx *= -0.25
+        ball.dx *= -1
+
+    # Paddle and ball collisions
+    # edges touching and between top and bottom of paddle
+    if ball.xcor() > 340 and ball.xcor() < 350 and (ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50):
+        ball.setx(340)
+        ball.dx *= -1
+
+    if ball.xcor() < -340 and ball.xcor() > -350 and (ball.ycor() < paddle_a.ycor() + 50 and ball.ycor() > paddle_a.ycor() - 50):
+        ball.setx(-340)
+        ball.dx *= -1
