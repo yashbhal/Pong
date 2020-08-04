@@ -6,6 +6,11 @@ wn.bgcolor("black")
 wn.setup(width=800, height=600)
 wn.tracer(0)  # stops window from updating. Helps speed up games
 
+# Score
+score_a = 0
+score_b = 0
+
+
 # Paddle A
 paddle_a = turtle.Turtle()  # T = class name
 
@@ -125,17 +130,25 @@ while True:
     if ball.xcor() > 390:  # 400 left, 400 right, 800 total
         ball.goto(0, 0)
         ball.dx *= -1
+        score_a += 1  # when ball goes off right side of the screen
+        pen.clear()
+        pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center",
+                  font=("Courier", 24, "normal"))
 
     if ball.xcor() < -390:  # 400 left, 400 right, 800 total
         ball.goto(0, 0)
         ball.dx *= -1
+        score_b += 1  # when ball goes off the left side
+        pen.clear()
+        pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center",
+                  font=("Courier", 24, "normal"))
 
-    # Paddle and ball collisions
-    # edges touching and between top and bottom of paddle
-    if ball.xcor() > 340 and ball.xcor() < 350 and (ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50):
+    # Paddle and ball collision
+
+    if(ball.xcor() > 340) and (ball.xcor() < 350) and (ball.ycor() < paddle_b.ycor() + 40 and ball.ycor() > paddle_b.ycor() - 40):
         ball.setx(340)
-        ball.dx *= -1
+        ball_dx = ball_dx * -1
 
-    if ball.xcor() < -340 and ball.xcor() > -350 and (ball.ycor() < paddle_a.ycor() + 50 and ball.ycor() > paddle_a.ycor() - 50):
+    if(ball.xcor() < -340) and (ball.xcor() > -350) and (ball.ycor() < paddle_a.ycor() + 40 and ball.ycor() > paddle_a.ycor() - 40):
         ball.setx(-340)
-        ball.dx *= -1
+        ball_dx = ball_dx * -1
